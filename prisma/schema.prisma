@@ -9,28 +9,91 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER 
+  RECRUTER
+  ADMIN
+}
 
-model Users {
-  id      Int      @id @default(autoincrement())
+enum Location {
+  PRESENCIAL
+  REMOTO
+  HIBRIDO
+}
+
+
+model User {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name String
   email String @unique
+  cpf Int @unique
+  estacio_student Boolean
   password String 
-  role String
-  type String
+  role Role @default(USER)
+  profile Profile?
+  recruiter_profile RecruiterProfile?
 }
 
-model Files {
-  id      Int      @id @default(autoincrement())
-
+model Profile {
+  id                    String     @id @default(auto()) @map("_id") @db.ObjectId
+  profile_picture       String?
+  curse                 String
+  type_curse            String
+  career_opportunity    String
+  experience            Experience[]
+  technical_skills      String[]
+  education             Education[]
+  professional_objective String?
+  salary_expectation    Int
+  work_preference       Location[] @default([])
+  cv_pdf                String?
+  user      User  @relation(fields: [user_id], references: [id])
+  user_id   String @unique @db.ObjectId
 }
 
-model Jobs {
-  id      Int      @id @default(autoincrement())
-  title String
+model Experience {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
   description String
+  profile     Profile  @relation(fields: [profile_id], references: [id])
+  profile_id   String @unique @db.ObjectId
+
+}
+
+model Education {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  degree      String
+  type        String
+  start_date  DateTime
+  end_date    DateTime
+  description_degree  String
+  profile     Profile  @relation(fields: [profile_id], references: [id])
+  profile_id   String @unique @db.ObjectId
+}
+
+
+
+model RecruiterProfile {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  company_recruiter     String
+  role_recruiter  String
+  jobOffers   JobOffer[]
+  user        User    @relation(fields: [user_id], references: [id])
+  user_id      String  @unique @db.ObjectId
+}
+
+model JobOffer {
+  id           String  @id @default(auto()) @map("_id") @db.ObjectId
+  role_job        String
+  company_job    String
+  salary    Int
+  office_location Location[] @default([])
+  description  String
   requirements String
+  recruiter    RecruiterProfile @relation(fields: [recruiter_profile_id], references: [id])
+  recruiter_profile_id String @unique @db.ObjectId
 }
