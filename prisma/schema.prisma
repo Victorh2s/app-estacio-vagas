@@ -30,7 +30,7 @@ model User {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name String
   email String @unique
-  cpf Int @unique
+  cpf String @unique
   estacio_student Boolean
   password String 
   role Role @default(USER)
@@ -74,8 +74,6 @@ model Education {
   profile     Profile  @relation(fields: [profile_id], references: [id])
   profile_id   String @unique @db.ObjectId
 }
-
-
 
 model RecruiterProfile {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
