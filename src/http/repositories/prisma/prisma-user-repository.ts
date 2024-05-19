@@ -148,6 +148,24 @@ export class PrismaUserRepository implements IntPrismaUserRepository{
 		return user;
 	}
 
+	async GetUserByEmailSignIn(email: string) {
+		const user = await prisma.user.findUnique({
+			where: { email },
+			select: {
+				id: true,
+				name: true,
+				email: true,
+				cpf: true,
+				password: true,
+				role: true,
+				estacio_student: true,
+			}
+		});
+
+
+		return user;
+	}
+
 	
 	async CreateUser({name, email, cpf, estacio_student, password, role}: IntCreateUser){
 		await prisma.user.create({

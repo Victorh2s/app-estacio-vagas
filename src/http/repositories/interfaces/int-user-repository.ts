@@ -89,6 +89,16 @@ export interface IntPrismaUserRepository {
 
     GetUser(id: string): Promise<IntUser | null>
 
+    GetUserByEmailSignIn(email: string): Promise<{
+        id: string;
+        name: string;
+        email: string;
+        cpf: string;
+        password: string;
+        estacio_student: boolean;
+        role: Role;
+    } | null>
+
     CreateUser({ name, email, cpf, estacio_student, password, role }: IntCreateUser): Promise<void>
 
     UpdateUser(id: string, data: IntUpdateUser): Promise<void>

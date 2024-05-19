@@ -18,12 +18,10 @@ export async function SignUpController(req: Request, res: Response){
         
         
 
-		const {name, email, cpf, estacio_student, password, role} = registerBodySchema.parse(req.body);
+		const data = registerBodySchema.parse(req.body);
 
 		const prismaUserRepository = new PrismaUserRepository();
 		const signUpService = new SignUpService(prismaUserRepository);
-
-		const data = { name, email, cpf, estacio_student, password, role };
 
 		await signUpService.execute(data);
 
