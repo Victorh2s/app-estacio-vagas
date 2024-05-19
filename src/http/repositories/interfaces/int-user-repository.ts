@@ -12,8 +12,13 @@ export interface IntUser {
     recruiter_profile?: IntRecruiterProfile | null;
 }
 
-export interface IntCreateUser extends IntUser {
-    password: string;
+export interface IntCreateUser{
+	name: string;
+	email: string;
+	cpf: string;
+	estacio_student: boolean;
+	password: string;
+	role: Role;
 }
 
 export interface IntUpdateUser {
