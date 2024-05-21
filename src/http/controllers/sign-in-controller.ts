@@ -1,6 +1,6 @@
 import { PrismaUserRepository } from "@/http/repositories/prisma/prisma-user-repository";
 import { GenerateTokensService } from "@/http/services/generate-token-service";
-import { SignInService } from "@/http/services/user-services/sign-in-service";
+import { SignInService } from "@/http/services/sign-in-service";
 import { Request, Response } from "express";
 
 export async function SignInController(req: Request, res: Response){
@@ -11,7 +11,6 @@ export async function SignInController(req: Request, res: Response){
 		const prismaUserRepository = new PrismaUserRepository();
 		const generateTokenService =  new GenerateTokensService();
 		const signInService = new SignInService(prismaUserRepository, generateTokenService);
-
 
 		const token = await signInService.execute(data);
 

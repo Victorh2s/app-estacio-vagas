@@ -9,7 +9,6 @@ interface TokenPayLoad {
     exp: number;
   }
 
-
 export async function VerifyTokenMiddleware(
 	request: Request,
 	response: Response,
@@ -37,15 +36,11 @@ export async function VerifyTokenMiddleware(
 			throw new Error("Not Authorization");
 		}
 
-      
-		
-
 		request.auth_routes = {
 			userId: user.id,
 			token: token,
 			role: user.role
 		};
-
 
 		return next();
 	} catch (error) {

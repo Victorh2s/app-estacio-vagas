@@ -4,6 +4,7 @@ import "dotenv/config";
 import { userRoute } from "./http/routes/user-route";
 import { VerifyTokenMiddleware } from "./http/middlewares/verify-token";
 import { VerifyRokeMiddleware } from "./http/middlewares/verify-role";
+import { profileRoute } from "./http/routes/profile-route";
 
 export const app = express();
 
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/user", userRoute);
+app.use("/user/profile", profileRoute);
 app.get("/",VerifyTokenMiddleware,VerifyRokeMiddleware("USER"), async (req, res) => {
 	try {
 	

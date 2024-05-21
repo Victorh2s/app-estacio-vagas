@@ -1,5 +1,5 @@
 import { PrismaUserRepository } from "@/http/repositories/prisma/prisma-user-repository";
-import { SignUpService } from "@/http/services/user-services/sign-up-service";
+import { SignUpService } from "@/http/services/sign-up-service";
 import { Request, Response } from "express";
 import { ZodError, z } from "zod";
 
@@ -15,8 +15,6 @@ export async function SignUpController(req: Request, res: Response){
 			password: z.string().min(6, "A senha deve conter no mínimo 6 caracteres!").max(50, "A senha deve conter até 50 caracteres!").regex(regexPassword, "A senha deve conter pelo menos 1 letra maiúscula, 1 número e 1 caractere especial."),
 			role: z.enum(["USER", "RECRUTER", "ADMIN"],{message:"O campo 'role' deve ser 'USER', 'RECRUTER' ou 'ADMIN'."})
 		});   
-        
-        
 
 		const data = registerBodySchema.parse(req.body);
 

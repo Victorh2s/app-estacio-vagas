@@ -2,9 +2,6 @@ import { IntCreateUser } from "@/http/repositories/interfaces/int-user-repositor
 import { PrismaUserRepository } from "@/http/repositories/prisma/prisma-user-repository";
 import { hash } from "bcryptjs";
 
-
-
-
 export class SignUpService {
 	constructor(private prismaUserRepository: PrismaUserRepository ) {}
   

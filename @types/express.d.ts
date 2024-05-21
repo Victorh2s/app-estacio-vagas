@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 
+
 import { Role } from "@prisma/client";
 
 interface auth_routes {
