@@ -1,7 +1,6 @@
 import { Prisma } from "@prisma/client";
 
 export interface IntCreateAndUpdateExperience{
-    curse: string;
     title: string;
     description: string;
     profile_id: string;

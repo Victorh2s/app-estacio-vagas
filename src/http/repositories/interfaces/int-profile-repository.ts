@@ -4,7 +4,7 @@ export interface IntCreateAndUpdateProfile{
     curse: string;
     type_curse: string;
     career_opportunity: string;
-    technical_skills: string[];
+    technical_skills: string;
     professional_objective: string;
     salary_expectation: number;
     work_preference: Location[];
@@ -20,7 +20,7 @@ export interface IntPrismaProfileRepository {
         curse: string;
         type_curse: string;
         career_opportunity: string;
-        technical_skills: string[];
+        technical_skills: string;
         professional_objective: string | null;
         salary_expectation: number;
         work_preference: Location[];
@@ -34,7 +34,7 @@ export interface IntPrismaProfileRepository {
         curse: string;
         type_curse: string;
         career_opportunity: string;
-        technical_skills: string[];
+        technical_skills: string;
         professional_objective: string | null;
         salary_expectation: number;
         work_preference: Location[];

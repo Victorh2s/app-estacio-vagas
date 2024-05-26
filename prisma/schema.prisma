@@ -25,6 +25,11 @@ enum Location {
   HIBRIDO
 }
 
+enum StatusApplication {
+  PENDENTE
+  APROVADA
+  REJEITADA
+}
 
 model User {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
@@ -36,6 +41,7 @@ model User {
   role Role @default(USER)
   profile Profile?
   recruiter_profile RecruiterProfile?
+  applications Application[]
 }
 
 model Profile {
@@ -45,11 +51,11 @@ model Profile {
   type_curse            String
   career_opportunity    String
   experience            Experience[]
-  technical_skills      String[]
+  technical_skills      String
   education             Education[]
   professional_objective String?
   salary_expectation    Int
-  work_preference       Location[] @default([])
+  work_preference       Location[]
   cv_pdf                String?
   user      User  @relation(fields: [user_id], references: [id])
   user_id   String @unique @db.ObjectId
@@ -59,20 +65,20 @@ model Experience {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
-  profile     Profile  @relation(fields: [profile_id], references: [id])
-  profile_id   String @unique @db.ObjectId
+  profile     Profile  @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+  profile_id   String @db.ObjectId
 
 }
 
 model Education {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  degree      String
+  institution      String
   type        String
-  start_date  DateTime
-  end_date    DateTime
+  start_date  String
+  end_date    String
   description_degree  String
-  profile     Profile  @relation(fields: [profile_id], references: [id])
-  profile_id   String @unique @db.ObjectId
+  profile     Profile  @relation(fields: [profile_id], references: [id], onDelete: Cascade)
+  profile_id   String  @db.ObjectId
 }
 
 model RecruiterProfile {
@@ -93,5 +99,16 @@ model JobOffer {
   description  String
   requirements String
   recruiter    RecruiterProfile @relation(fields: [recruiter_profile_id], references: [id])
-  recruiter_profile_id String @unique @db.ObjectId
+  recruiter_profile_id String  @db.ObjectId
+  applications Application[]
+}
+
+model Application {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  user        User    @relation(fields: [user_id], references: [id])
+  user_id     String  @db.ObjectId
+  jobOffer    JobOffer @relation(fields: [job_offer_id], references: [id])
+  job_offer_id String @db.ObjectId
+  status      StatusApplication 
+  createdAt   DateTime @default(now())
 }

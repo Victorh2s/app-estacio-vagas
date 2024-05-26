@@ -38,7 +38,7 @@ export interface IntProfile {
     type_curse: string;
     career_opportunity: string;
     experience: IntExperience[];
-    technical_skills: string[];
+    technical_skills: string;
     education: IntEducation[];
     professional_objective?: string | null;
     salary_expectation: number;
@@ -56,10 +56,10 @@ export interface IntExperience {
 
 export interface IntEducation {
     id: string;
-    degree: string;
+    institution: string;
     type: string;
-    start_date: Date;
-    end_date: Date;
+    start_date: string;
+    end_date: string;
     description_degree: string;
     profile_id: string;
 }

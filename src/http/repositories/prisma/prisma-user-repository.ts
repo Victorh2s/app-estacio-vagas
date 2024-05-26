@@ -35,7 +35,7 @@ export class PrismaUserRepository implements IntPrismaUserRepository{
 						education: {
 							select: {
 								id: true,
-								degree: true,
+								institution: true,
 								type: true,
 								start_date: true,
 								end_date: true,
@@ -103,7 +103,7 @@ export class PrismaUserRepository implements IntPrismaUserRepository{
 						education: {
 							select: {
 								id: true,
-								degree: true,
+								institution: true,
 								type: true,
 								start_date: true,
 								end_date: true,

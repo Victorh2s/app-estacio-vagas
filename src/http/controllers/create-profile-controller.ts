@@ -1,7 +1,7 @@
 import {v2 as cloudinary} from "cloudinary";
 import { Request, Response } from "express";
 import { PrismaProfileRepository } from "../repositories/prisma/prisma-profile-repository";
-import { PrismaExperienceRepository } from "../repositories/prisma/prisma-exoerience-repository";
+import { PrismaExperienceRepository } from "../repositories/prisma/prisma-experience-repository";
 import { PrismaEducationRepository } from "../repositories/prisma/prisma-education-repository";
 import { CreateProfileService, IntCreateProfileService } from "../services/create-profile-service";
 
@@ -58,19 +58,22 @@ export async function CreateProfileController(req: Request, res: Response){
 		const {id} =  req.params;
 	
 		const {curse, type_curse, career_opportunity, experience, technical_skills, education, professional_objective, salary_expectation : salary, work_preference,} : IntCreateProfileService=  req.body;
+		const workPreferenceArray = Array.isArray(work_preference) ? work_preference : JSON.parse(work_preference.trim());
+		const experienceArray = Array.isArray(experience) ? experience : JSON.parse(experience.trim());
+		const educationArray = Array.isArray(education) ? education : JSON.parse(education.trim());
 
-	
+
 
 		const newProfile = {
 			curse, 
 			type_curse, 
 			career_opportunity, 
-			experience, 
+			experience: experienceArray, 
 			technical_skills, 
-			education, 
+			education: educationArray, 
 			professional_objective, 
 			salary_expectation: Number(salary), 
-			work_preference,
+			work_preference: workPreferenceArray,
 			profile_picture: profilePictureCloudinary ? profilePictureCloudinary.url : "",
 			cv_pdf: cvPdfCloudinary ? cvPdfCloudinary.url : "",
 			user_id:id
@@ -81,10 +84,10 @@ export async function CreateProfileController(req: Request, res: Response){
 		const prismaEducationRepository = new PrismaEducationRepository();
 		const createProfileService = new CreateProfileService(prismaProfileRepository, prismaExperienceRepository, prismaEducationRepository);
 
-		const profile = await createProfileService.execute(newProfile);
+		await createProfileService.execute(newProfile);
 
 
-		return res.json(profile).status(200);
+		return res.json("Perfil criado com sucesso!").status(200);
 
 	} catch (error:any) {
 		return res.status(500).json({ message: error.message });
