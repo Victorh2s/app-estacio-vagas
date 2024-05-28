@@ -10,7 +10,7 @@ app.listen(process.env.PORT, async() => {
 
 	// await prisma.profile.delete({
 	// 	where:{
-	// 		id: "665284c36af3ae93f62ef376"
+	// 		id: "665282fcc0c86ab126abb692"
 	// 	}
 	// });
-});
+});	

@@ -13,7 +13,7 @@ export async function SignUpController(req: Request, res: Response){
 			cpf: z.string().min(11, "CPF inválido!"),
 			estacio_student: z.boolean(),
 			password: z.string().min(6, "A senha deve conter no mínimo 6 caracteres!").max(50, "A senha deve conter até 50 caracteres!").regex(regexPassword, "A senha deve conter pelo menos 1 letra maiúscula, 1 número e 1 caractere especial."),
-			role: z.enum(["USER", "RECRUTER", "ADMIN"],{message:"O campo 'role' deve ser 'USER', 'RECRUTER' ou 'ADMIN'."})
+			role: z.enum(["USER", "RECRUITER", "ADMIN"],{message:"O campo 'role' deve ser 'USER', 'RECRUITER' ou 'ADMIN'."})
 		});   
 
 		const data = registerBodySchema.parse(req.body);

@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { IntCreateAndUpdateExperience, IntPrismaExperienceRepository } from "../interfaces/int-experiencia-repository";
+import { IntPrismaExperienceRepository } from "../interfaces/int-experiencia-repository";
 
 const prisma = new PrismaClient();
 
@@ -22,24 +22,6 @@ export class PrismaExperienceRepository implements IntPrismaExperienceRepository
 				profile_id: profileId
 			}
 		});
-	}
-
-
-    
-	async CreateExperienceInProfile(data:IntCreateAndUpdateExperience) {
-		return await prisma.experience.create({
-			data
-		});
-	}
-
-	async UpdateExperienceInProfile(data: IntCreateAndUpdateExperience, experienceId: string) {
-		return await prisma.experience.update({
-			where:{
-				id: experienceId
-			},
-			data
-		});   
-
 	}
 
 

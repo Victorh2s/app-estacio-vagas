@@ -30,15 +30,6 @@ export class PrismaEducationRepository implements IntPrismaEducationRepository{
 		});
 	}
 
-	async UpdateEducationInProfile(data: IntCreateAndUpdateEducation, educationId: string){
-		return await prisma.education.update({
-			where:{
-				id: educationId
-			},
-			data
-		});
-	}
-
 	async DeleteEducationInProfile(educationId: string) {
 		return await prisma.education.delete({
 			where:{

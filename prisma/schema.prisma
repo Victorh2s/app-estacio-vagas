@@ -15,7 +15,7 @@ datasource db {
 
 enum Role {
   USER 
-  RECRUTER
+  RECRUITER
   ADMIN
 }
 
@@ -85,6 +85,7 @@ model RecruiterProfile {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   company_recruiter     String
   role_recruiter  String
+  description_recruiter String
   jobOffers   JobOffer[]
   user        User    @relation(fields: [user_id], references: [id])
   user_id      String  @unique @db.ObjectId

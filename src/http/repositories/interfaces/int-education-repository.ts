@@ -1,5 +1,15 @@
 import { Prisma } from "@prisma/client";
 
+export interface IntEducation {
+    id: string;
+    institution: string;
+    type: string;
+    start_date: string;
+    end_date: string;
+    description_degree: string;
+    profile_id: string;
+}
+
 export interface IntCreateAndUpdateEducation{
     profile_id: string;
     institution: string;
@@ -41,15 +51,6 @@ export interface IntPrismaEducationRepository {
         profile_id: string;
     }>
 
-    UpdateEducationInProfile(data: IntCreateAndUpdateEducation, educationId: string): Promise<{
-        id: string;
-        institution: string;
-        type: string;
-        start_date: string;
-        end_date: string;
-        description_degree: string;
-        profile_id: string;
-    }>
 
     DeleteEducationInProfile(educationId: string): Promise<{
         id: string;

@@ -1,4 +1,6 @@
-import { Prisma } from "@prisma/client";
+import { Experience, Prisma } from "@prisma/client";
+
+
 
 export interface IntCreateAndUpdateExperience{
     title: string;
@@ -8,42 +10,13 @@ export interface IntCreateAndUpdateExperience{
 
 
 export interface IntPrismaExperienceRepository {
-    ViewExperienceInProfile(profileId: string): Promise<{
-        id: string;
-        title: string;
-        description: string;
-        profile_id: string;
-    }[]>
+    ViewExperienceInProfile(profileId: string): Promise<Experience[]>
 
-    ViewUniqueExperienceInProfile(experienceId: string): Promise<{
-        id: string;
-        title: string;
-        description: string;
-        profile_id: string;
-    } | null>
-
-    CreateExperienceInProfile(data: IntCreateAndUpdateExperience): Promise<{
-        id: string;
-        title: string;
-        description: string;
-        profile_id: string;
-    }>
-
-    UpdateExperienceInProfile(data: IntCreateAndUpdateExperience, experienceId: string): Promise<{
-        id: string;
-        title: string;
-        description: string;
-        profile_id: string;
-    }>
+    ViewUniqueExperienceInProfile(experienceId: string): Promise<Experience | null>
 
     DeleteManyExperienceInProfile(profileId: string): Promise<Prisma.BatchPayload>
    
-    DeleteExperienceInProfile(experienceId: string): Promise<{
-        id: string;
-        title: string;
-        description: string;
-        profile_id: string;
-    }>
+    DeleteExperienceInProfile(experienceId: string): Promise<Experience>
 
     VerifyExperienceExistById(experienceId: string): Promise<void>
 }

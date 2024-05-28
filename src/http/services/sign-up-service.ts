@@ -12,7 +12,7 @@ export class SignUpService {
 
 		const passwordHash = await hash(data.password, 6);
 
-		const nreUser = {
+		const newUser = {
 			name: data.name,
 			email: data.email,
 			password: passwordHash,
@@ -21,7 +21,7 @@ export class SignUpService {
 			role: data.role
 		};
 
-		await this.prismaUserRepository.CreateUser(nreUser);
+		await this.prismaUserRepository.CreateUser(newUser);
 		
 		return;
 	}

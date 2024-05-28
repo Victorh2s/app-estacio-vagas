@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/user", userRoute);
-app.use("/user/profile", profileRoute);
+app.use("/profile", profileRoute);
 app.get("/",VerifyTokenMiddleware,VerifyRokeMiddleware("USER"), async (req, res) => {
 	try {
 	
