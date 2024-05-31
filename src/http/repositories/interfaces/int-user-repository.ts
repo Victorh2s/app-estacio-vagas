@@ -1,5 +1,36 @@
 
-import { Location, Role } from "@prisma/client";
+import { Application, Profile, Role } from "@prisma/client";
+
+type Location = "PRESENCIAL" | "REMOTO" | "HIBRIDO";
+
+
+interface Experience {
+    title: string;
+    description: string;
+}
+
+interface Education {
+    institution: string;
+    type: string;
+    start_date: string;
+    end_date: string;
+    description_degree: string;
+}
+
+export interface IntUserCreateProfile {
+    profile_picture?: string | null;
+    curse: string;
+    type_curse: string;
+    career_opportunity: string;
+    technical_skills: string;
+    professional_objective?: string | null;
+    salary_expectation: number;
+    work_preference: Location[];
+    cv_pdf?: string | null;
+    user_id: string;
+    experience?: Experience[];
+    education?: Education[];
+}
 
 export interface IntUser {
     id: string;
@@ -10,16 +41,24 @@ export interface IntUser {
     role: Role;
     profile?: IntProfile | null;
     recruiter_profile?: IntRecruiterProfile | null;
+    applications: Application[] | null
 }
 
-export interface IntCreateUser{
-	name: string;
-	email: string;
-	cpf: string;
-	estacio_student: boolean;
-	password: string;
-	role: Role;
+
+export interface IntUserUpdateProfile {
+    curse?: string;
+    type_curse?: string;
+    career_opportunity?: string;
+    technical_skills?: string;
+    professional_objective?: string | undefined | null;
+    salary_expectation?: number;
+    work_preference?: Location[];
+    profile_picture?: string | null;
+    cv_pdf?: string | null;
+    experience?: IntExperience[];
+    education?: IntEducation[];
 }
+
 
 export interface IntUpdateUser {
     id: string;
@@ -85,30 +124,31 @@ export interface IntJobOffer {
 
 export interface IntPrismaUserRepository {
 
-    GetUsers(): Promise<IntUser[]>
+    ViewUsers(): Promise<IntUser[]>
 
-    GetUser(id: string): Promise<IntUser | null>
-
-    GetUserByEmailSignIn(email: string): Promise<{
-        id: string;
-        name: string;
-        email: string;
-        cpf: string;
-        password: string;
-        estacio_student: boolean;
-        role: Role;
-    } | null>
-
-    CreateUser({ name, email, cpf, estacio_student, password, role }: IntCreateUser): Promise<void>
+    ViewUser(id: string): Promise<IntUser | null>
 
     UpdateUser(id: string, data: IntUpdateUser): Promise<void>
 
     DeleteUser(id: string): Promise<void>
 
-    VerifyUserExist(id: string): Promise<void>
+    UserViewProfile(userId: string): Promise <Profile>
 
-    CpfAlreadyExist(cpf: string): Promise<void>
+    UserCreateProfile(data: IntUserCreateProfile): Promise<Profile>
 
-    EmailAlreadyExist(email: string): Promise<void>
+    UserUpdateProfile(data: IntUserUpdateProfile, profileId: string): Promise<{
+        id: string;
+        profile_picture: string | null;
+        curse: string;
+        type_curse: string;
+        career_opportunity: string;
+        technical_skills: string;
+        professional_objective: string | null;
+        salary_expectation: number;
+        work_preference: Location[];
+        cv_pdf: string | null;
+        user_id: string;
+    } | void>
 
+    UserVerifyProfileExistById(profileId: string): Promise<void>
 }

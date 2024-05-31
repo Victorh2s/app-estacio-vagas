@@ -34,11 +34,7 @@ App Estacio Vagas
 		}
 	  ]
 
-	create job
-	update job
-	delete job
-	aplication
-
+	
 	  [ 
 		{
 			"id": "665564e4cec9cd284eb8e8e7",

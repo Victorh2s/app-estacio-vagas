@@ -31,6 +31,11 @@ enum StatusApplication {
   REJEITADA
 }
 
+enum StatusJob {
+  FECHADO
+  ABERTO
+}
+
 model User {
   id          String  @id @default(auto()) @map("_id") @db.ObjectId
   name String
@@ -99,6 +104,7 @@ model JobOffer {
   office_location Location[] @default([])
   description  String
   requirements String
+  status_job StatusJob
   recruiter    RecruiterProfile @relation(fields: [recruiter_profile_id], references: [id])
   recruiter_profile_id String  @db.ObjectId
   applications Application[]
@@ -110,6 +116,6 @@ model Application {
   user_id     String  @db.ObjectId
   jobOffer    JobOffer @relation(fields: [job_offer_id], references: [id])
   job_offer_id String @db.ObjectId
-  status      StatusApplication 
+  status      StatusApplication @default(PENDENTE)
   createdAt   DateTime @default(now())
 }

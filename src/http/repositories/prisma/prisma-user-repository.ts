@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import {  IntPrismaUserRepository, IntUpdateUser, IntCreateUser } from "../interfaces/int-user-repository";
+import {  IntPrismaUserRepository, IntUpdateUser, IntUserCreateProfile, IntUserUpdateProfile } from "../interfaces/int-user-repository";
 
 const prisma = new PrismaClient();
 
@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 
 export class PrismaUserRepository implements IntPrismaUserRepository{
 
-	async GetUsers() {
+	async ViewUsers() {
 		return prisma.user.findMany({
 			select: {
 				id: true,
@@ -70,13 +70,16 @@ export class PrismaUserRepository implements IntPrismaUserRepository{
 						user_id: true,
 					},
 				},
+				applications: true
 			},
 		}); 
 	}
 
-	async GetUser(id: string) {
+	async ViewUser(userId: string) {
 		const user = await prisma.user.findUnique({
-			where: { id },
+			where: {
+				id: userId 
+			},
 			select: {
 				id: true,
 				name: true,
@@ -138,6 +141,7 @@ export class PrismaUserRepository implements IntPrismaUserRepository{
 						user_id: true,
 					},
 				},
+				applications: true
 			}
 		});
 
@@ -146,39 +150,6 @@ export class PrismaUserRepository implements IntPrismaUserRepository{
 		}
 
 		return user;
-	}
-
-	async GetUserByEmailSignIn(email: string) {
-		const user = await prisma.user.findUnique({
-			where: { email },
-			select: {
-				id: true,
-				name: true,
-				email: true,
-				cpf: true,
-				password: true,
-				role: true,
-				estacio_student: true,
-			}
-		});
-
-
-		return user;
-	}
-
-	
-	async CreateUser({name, email, cpf, estacio_student, password, role}: IntCreateUser){
-		await prisma.user.create({
-			data:{
-				name, 
-				email, 
-				cpf, 
-				estacio_student, 
-				password, 
-				role
-			}
-		});
-		return; 
 	}
 
 	async UpdateUser(id: string, data: IntUpdateUser  ) {
@@ -200,51 +171,179 @@ export class PrismaUserRepository implements IntPrismaUserRepository{
 		return;
 	}
 
-	async VerifyUserExist(id: string) {
-		const user = await prisma.user.findUnique({
+	async UserViewProfile(userId: string) {
+		const profile = await prisma.profile.findUnique({
 			where:{
-				id
+				user_id: userId
 			},
-            
+			include:{
+				experience: true,
+				education: true
+			}
 		});
 
-		if(!user) {
-			throw new Error("Esse usuário não existe.");
+		if(!profile) throw new Error("Esse perfil não existe");
+
+		return profile;
+	}
+
+	async UserCreateProfile(data:IntUserCreateProfile) {
+		const profile = await prisma.profile.create({
+			data: {
+				profile_picture: data.profile_picture ?? null,
+				curse: data.curse,
+				type_curse: data.type_curse,
+				career_opportunity: data.career_opportunity,
+				technical_skills: data.technical_skills,
+				professional_objective: data.professional_objective ?? null,
+				salary_expectation: data.salary_expectation,
+				work_preference: {
+					set: data.work_preference
+				},
+				cv_pdf: data.cv_pdf ?? null,
+				user_id: data.user_id,
+				experience: {
+					create: data.experience ?? []
+				},
+				education: {
+					create: data.education ?? []
+				}
+			}
+		});
+	
+		return profile;
+	}
+
+	async UserUpdateProfile(data: Partial<IntUserUpdateProfile>, user_id: string) {
+		console.log(data.experience, data.education);
+
+		const { experience, education, ...rest } = data;
+
+
+		if(typeof experience !== "undefined" && typeof education !== "undefined" ) {
+			const profile = await prisma.profile.update({
+				where: {
+					user_id
+				},
+				data: {
+					...rest,
+					experience: {
+						upsert: experience?.map((item) => ({
+							where: { id: item.id },
+							update: {
+								title: item.title,
+								description: item.description
+							},
+							create: {
+								title: item.title ? item.title : "",
+								description: item.description ? item.description : ""
+							}
+						}))
+					},
+					education:{
+						upsert: education?.map((item) => ({
+							where: { id: item.id },
+							update: {
+								institution: item.institution,
+								type: item.type,
+								description_degree: item.description_degree,
+								start_date: item.start_date,
+								end_date: item.end_date 
+							},
+							create: {
+								institution: item.institution ? item.institution : "",
+								type: item.type ? item.type : "",
+								description_degree: item.description_degree ? item.description_degree : "",
+								start_date: item.start_date ? item.start_date : "",
+								end_date: item.end_date ? item.end_date : ""
+							}
+						}))
+					}
+				}
+			});   
+			return profile;
 		}
-        
-		return;
+
+		
+		if(typeof experience !== "undefined" && typeof education === "undefined" ) {
+			const profile = await prisma.profile.update({
+				where: {
+					user_id
+				},
+				data: {
+					...rest,
+					experience: {
+						upsert: experience?.map((item) => ({
+							where: { id: item.id },
+							update: {
+								title: item.title,
+								description: item.description
+							},
+							create: {
+								title: item.title ? item.title : "",
+								description: item.description ? item.description : ""
+							}
+						}))
+					}
+				}
+			});   
+			return profile;
+		}
+
+		if(typeof experience === "undefined" && typeof education !== "undefined" ) {
+			const profile = await prisma.profile.update({
+				where: {
+					user_id
+				},
+				data: {
+					...rest,
+					education:{
+						upsert: education?.map((item) => ({
+							where: { id: item.id },
+							update: {
+								institution: item.institution,
+								type: item.type,
+								description_degree: item.description_degree,
+								start_date: item.start_date,
+								end_date: item.end_date 
+							},
+							create: {
+								institution: item.institution ? item.institution : "",
+								type: item.type ? item.type : "",
+								description_degree: item.description_degree ? item.description_degree : "",
+								start_date: item.start_date ? item.start_date : "",
+								end_date: item.end_date ? item.end_date : ""
+							}
+						}))
+					}
+				}
+			});   
+			return profile;
+		}
+
+		const profile = await prisma.profile.update({
+			where: {
+				user_id
+			},
+			data: {
+				...rest,
+			}
+		});   
+
+		return profile;
+
 	}
 
-	async CpfAlreadyExist(cpf: string) {
-		const cpf_already_exist = await prisma.user.findUnique({
-			where:{
-				cpf
+	async UserVerifyProfileExistById(profileId: string) {
+		const profile = await prisma.profile.findUnique({
+			where: {
+				id: profileId
 			}
 		});
 
-		if(cpf_already_exist) throw new Error("Esse CPF já está cadastrado!");
-        
+		if(!profile) throw new Error("Perfil não encontrado!");
+
 		return;
-	}
-
-	async EmailAlreadyExist(email: string) {
-		const email_already_exist = await prisma.user.findUnique({
-			where:{
-				email
-			}
-		});
-
-		if(email_already_exist) throw new Error("Esse Email já está cadastrado!");
-        
-		return;
-	}
-
-	async GetUserWithPassword(id: string) {
-		const user = await prisma.user.findUnique({
-			where: { id },
-		});
-
-		return user;
 	}
 
 }

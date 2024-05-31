@@ -30,7 +30,7 @@ export async function VerifyTokenMiddleware(
 
 		const { id } = data as TokenPayLoad;
 
-		const user = await prismaUserRepository.GetUser(id);
+		const user = await prismaUserRepository.ViewUser(id);
 
 		if (!user) {
 			throw new Error("Not Authorization");

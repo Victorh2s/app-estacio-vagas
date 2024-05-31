@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 
 
 
-export  function VerifyRokeMiddleware(
+export  function VerifyRoleMiddleware(
 	roleToVerify: Role,
 	
 ) {
