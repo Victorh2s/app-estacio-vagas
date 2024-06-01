@@ -1,7 +1,5 @@
 import { PrismaRecruiterRepository } from "@/http/repositories/prisma/prisma-recruiter-repository";
 
-
-
 export class RecruiterViewManyJobService {
 	constructor(
 		private prismaRecruiterRepository: PrismaRecruiterRepository

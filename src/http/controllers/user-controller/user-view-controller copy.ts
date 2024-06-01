@@ -5,12 +5,12 @@ import { UserViewService } from "../../services/user-service/user-view-service c
 export async function UserViewController(req: Request, res: Response){
 	try {
 		
-		const { userId } = req.auth_routes;
+		const { user_id } = req.params;
 	
 		const prismaUserRepository = new PrismaUserRepository();
 		const userViewService = new UserViewService(prismaUserRepository);
 
-		const user = await userViewService.execute(userId);
+		const user = await userViewService.execute(user_id);
 
 
 		return res.json(user).status(200);

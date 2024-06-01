@@ -7,16 +7,15 @@ export async function RecruiterUpdateProfileController(req: Request, res: Respon
 	try {
 	
 		const { userId } = req.auth_routes;
-		const { profile_id } =  req.params;
 		const { company_recruiter, role_recruiter, description_recruiter } = req.body;
 
 		const prismaRecruiterRepository = new PrismaRecruiterRepository();
 		const recruiterUpdateProfileService = new RecruiterUpdateProfileService(prismaRecruiterRepository);
 
-		await recruiterUpdateProfileService.execute({company_recruiter, role_recruiter, description_recruiter, profileId: profile_id}, userId);
+		await recruiterUpdateProfileService.execute({company_recruiter, role_recruiter, description_recruiter}, userId);
 
 
-		return res.json("Perfil do recrutador criado com sucesso!").status(200);
+		return res.json("Perfil do recrutador atualizado com sucesso!").status(200);
 
 	} catch (error:any) {
 		return res.status(500).json({ message: error.message });

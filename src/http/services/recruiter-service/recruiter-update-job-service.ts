@@ -47,7 +47,6 @@ export class RecruiterUpdateJobService {
 			requirements, 
 			status_job 
 		});
-		console.log(updatedFields);
 
 		const data = {
 			...updatedFields

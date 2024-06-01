@@ -1,5 +1,5 @@
 import { PrismaUserRepository } from "@/http/repositories/prisma/prisma-user-repository";
-import { IntUserCreateProfileService } from "../interfaces-service";
+import { IntUserCreateProfileService } from "../interfaces-services";
 
 
 
@@ -12,7 +12,10 @@ export class UserCreateProfileService {
 	async execute(newProfile: IntUserCreateProfileService) {
 		const {career_opportunity, curse, cv_pdf, professional_objective, profile_picture, salary_expectation, technical_skills, type_curse, user_id, work_preference, experience, education} = newProfile;
 
-		console.log(newProfile);
+		const profile = await this.prismaUserRepository.UserViewProfile(user_id);
+
+		if(profile) throw new Error("Esse usuário já tem um perfil criado!");
+
 		const createdProfile = await this.prismaUserRepository.UserCreateProfile({
 			profile_picture,
 			curse,

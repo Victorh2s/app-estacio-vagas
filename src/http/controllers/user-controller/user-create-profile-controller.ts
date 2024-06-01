@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { UserCreateProfileService } from "../../services/user-service/user-create-profile-service";
 import cloudinary from "@/utils/cloudinary";
-import { IntUserCreateProfileService } from "../../services/interfaces-service";
 import { PrismaUserRepository } from "@/http/repositories/prisma/prisma-user-repository";
+import { IntUserCreateProfileService } from "@/http/services/interfaces-services";
 
 
 export async function UserCreateProfileController(req: Request, res: Response){

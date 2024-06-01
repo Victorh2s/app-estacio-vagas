@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { UserUpdateProfileService } from "../../services/user-service/user-update-profile-service";
-import { IntUpdateProfileService } from "../../services/interfaces-service";
 import cloudinary from "@/utils/cloudinary";
 import { PrismaUserRepository } from "@/http/repositories/prisma/prisma-user-repository";
+import { IntUpdateProfileService } from "@/http/services/interfaces-services";
 
 
 

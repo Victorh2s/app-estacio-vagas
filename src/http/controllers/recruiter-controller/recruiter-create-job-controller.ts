@@ -7,7 +7,6 @@ import { PrismaRecruiterRepository } from "@/http/repositories/prisma/prisma-rec
 export async function RecruiterCreateJobController(req: Request, res: Response){
 	try {
 		const { userId } = req.auth_routes;
-		const { recruiter_profile_id } =  req.params;
 	
 		const { role_job, company_job, salary, office_location, description, requirements, status_job }  =  req.body;
 
@@ -15,7 +14,7 @@ export async function RecruiterCreateJobController(req: Request, res: Response){
 		const prismaJobRepository = new PrismaJobRepository();
 		const recruiterCreateJobService = new RecruiterCreateJobService(prismaJobRepository, prismaRecruiterRepository);
 
-		await recruiterCreateJobService.execute({role_job, company_job, salary, office_location, description, requirements, status_job, recruiter_profile_id}, userId);
+		await recruiterCreateJobService.execute({role_job, company_job, salary, office_location, description, requirements, status_job}, userId);
 
 
 		return res.json("Vaga criada com sucesso!").status(200);

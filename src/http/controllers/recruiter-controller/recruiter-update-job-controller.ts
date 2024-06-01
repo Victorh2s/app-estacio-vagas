@@ -14,10 +14,10 @@ export async function RecruiterUpdateJobController(req: Request, res: Response){
 		const prismaJobRepository = new PrismaJobRepository();
 		const recruiterUpdateJobService = new RecruiterUpdateJobService(prismaJobRepository,prismaRecruiterRepository);
 
-		const newJob = await recruiterUpdateJobService.execute({job_id, role_job, company_job, salary, office_location, description, requirements, status_job }, userId);
+		await recruiterUpdateJobService.execute({job_id, role_job, company_job, salary, office_location, description, requirements, status_job }, userId);
 
 
-		return res.json(newJob).status(200);
+		return res.json("Vaga atualizada com sucesso!").status(200);
 
 	} catch (error:any) {
 		return res.status(500).json({ message: error.message });

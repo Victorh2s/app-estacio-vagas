@@ -6,13 +6,12 @@ import { PrismaRecruiterRepository } from "@/http/repositories/prisma/prisma-rec
 export async function RecruiterViewManyJobsController(req: Request, res: Response){
 	try {
 		
-		const { userId } = req.auth_routes;
+		const { user_id } = req.params;
 
 		const prismaRecruiterRepository = new PrismaRecruiterRepository();
 		const recruiterViewManyJobService = new RecruiterViewManyJobService(prismaRecruiterRepository);
 
-		const jobs = await recruiterViewManyJobService.execute(userId);
-
+		const jobs = await recruiterViewManyJobService.execute(user_id);
 
 		return res.json(jobs).status(200);
 

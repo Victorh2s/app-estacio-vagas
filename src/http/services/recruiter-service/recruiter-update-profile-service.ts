@@ -1,8 +1,11 @@
 import { PrismaRecruiterRepository } from "@/http/repositories/prisma/prisma-recruiter-repository";
-import { IntRecruiterUpdateProfile } from "../../repositories/interfaces/int-recruiter-repository";
 import { RecruiterProfile } from "@prisma/client";
 
-export interface IntRecruiterUpdateProfileService extends IntRecruiterUpdateProfile{}
+export interface IntRecruiterUpdateProfileService {
+	company_recruiter: string, 
+	description_recruiter: string, 
+	role_recruiter: string
+}
 
 function getUpdatedFields(oldData: RecruiterProfile, newData: Partial<RecruiterProfile>): Partial<RecruiterProfile> {
 	const updatedFields: Partial<RecruiterProfile> = {};
@@ -27,15 +30,17 @@ export class RecruiterUpdateProfileService {
 	) {}
 
   
-	async execute(updateRecruiterProfile: IntRecruiterUpdateProfile, userId: string) {
+	async execute(updateRecruiterProfile: IntRecruiterUpdateProfileService, userId: string) {
 
-		const { profileId, company_recruiter, description_recruiter, role_recruiter } = updateRecruiterProfile;
+		const { company_recruiter, description_recruiter, role_recruiter } = updateRecruiterProfile;
 
-		await this.prismaRecruiterRepository.RecruiterVerifyProfileExistById(profileId);
+		const recruiterProfile = await this.prismaRecruiterRepository.RecruiterViewProfile(userId);
+
+		await this.prismaRecruiterRepository.RecruiterVerifyProfileExistById(recruiterProfile.id);
 
 		const oldRecruiterProfile = await this.prismaRecruiterRepository.RecruiterViewProfile(userId);
 
-		if(oldRecruiterProfile.id !== profileId) throw new Error("Permissão negada: Esse perfil não corresponde ao recrutador logado!");
+		if(oldRecruiterProfile.id !== recruiterProfile.id) throw new Error("Permissão negada: Esse perfil não corresponde ao recrutador logado!");
 		
 		const updatedFields = getUpdatedFields(oldRecruiterProfile, {
 			company_recruiter, 
@@ -44,11 +49,10 @@ export class RecruiterUpdateProfileService {
 		});
 
 		const data = {
-			profileId,
+			profileId: recruiterProfile.id,
 			...updatedFields
 		};
 
-		console.log(updatedFields);
 		const createdProfile = await this.prismaRecruiterRepository.RecruiterUpdateProfile(data);
 
 		return createdProfile;

@@ -10,7 +10,6 @@ export interface IntRecruiterCreateJob {
     description: string, 
     requirements: string, 
     status_job: StatusJob
-    recruiter_profile_id: string
 }
 
 export interface IntRecruiterUpdateJob {

@@ -11,12 +11,15 @@ export class RecruiterCreateJobService {
 	) {}
 
   
-	async execute(newJob: IntRecruiterCreateJobService, userId: string) {
+	async execute(data: IntRecruiterCreateJobService, userId: string) {
 
-		const recruiter = await this.prismaRecruiterRepository.RecruiterViewProfile(newJob.recruiter_profile_id);
-
-		if(recruiter.user_id !== userId) throw new Error("Permissão negada: Este usuário não tem permissão para criar vagas em nome de outro recrutador");
+		const recruiterProfile = await this.prismaRecruiterRepository.RecruiterViewProfile(userId);
 		
+		const newJob = {
+			recruiter_profile_id: recruiterProfile.id,
+			...data
+		};
+
 		await this.prismaJobRepository.RecruiterCreateJob(newJob);
 
 		return;

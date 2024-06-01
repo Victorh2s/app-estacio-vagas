@@ -6,12 +6,12 @@ import { PrismaUserRepository } from "@/http/repositories/prisma/prisma-user-rep
 export async function UserViewProfileController(req: Request, res: Response){
 	try {
 		
-		const { userId } = req.auth_routes;
+		const { user_id } = req.params;
 	
 		const prismaUserRepository = new PrismaUserRepository();
 		const userViewProfileService = new UserViewProfileService(prismaUserRepository);
 
-		const userProfile = await userViewProfileService.execute(userId);
+		const userProfile = await userViewProfileService.execute(user_id);
 
 
 		return res.json(userProfile).status(200);

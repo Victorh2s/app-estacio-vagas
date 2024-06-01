@@ -1,7 +1,7 @@
 import { PrismaUserRepository } from "@/http/repositories/prisma/prisma-user-repository";
 import { Profile } from "@prisma/client";
 import { IntUserUpdateProfile } from "@/http/repositories/interfaces/int-user-repository";
-import { IntUpdateProfileServicee } from "../interfaces-services";
+import { IntUpdateProfileService } from "../interfaces-services";
 
 function getUpdatedFields(oldData: Profile, newData: Partial<Profile>): Partial<Profile> {
 	const updatedFields: Partial<Profile> = {};
@@ -25,7 +25,7 @@ export class UserUpdateProfileService {
 		private prismaUserRepository: PrismaUserRepository,
 	) {}
 
-	async execute(updateProfile: IntUpdateProfileServicee) {
+	async execute(updateProfile: IntUpdateProfileService ) {
 		const { career_opportunity, curse, cv_pdf, professional_objective, profile_picture, salary_expectation, technical_skills, type_curse, user_id, work_preference, experience, education } = updateProfile;
         
 		const oldProfile = await this.prismaUserRepository.UserViewProfile(user_id);

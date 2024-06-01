@@ -1,7 +1,7 @@
 import { IntExperience } from "@/http/repositories/interfaces/int-user-repository";
 import { Location } from "@prisma/client";
 
-export interface IntUpdateProfileServicee {
+export interface IntUpdateProfileService {
     curse?: string;
     type_curse?: string;
     career_opportunity?: string;
