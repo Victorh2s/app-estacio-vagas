@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server.ts",
-    "start": "node dist/server.js",
-    "build": "tsup src --out-dir dist/src"
+    "start": "node dist/src/server.js && ls dist",
+    "build": "tsup src --out-dir dist/src && ls dist"
   },
   "keywords": [],
   "author": "",
