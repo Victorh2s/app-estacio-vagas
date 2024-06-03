@@ -31,7 +31,7 @@ export class RecruiterUpdateJobService {
   
 	async execute(updateJob: IntRecruiterUpdateJobService, userId: string) {
 
-		const { job_id, role_job, company_job, salary, office_location, description, requirements, status_job  } = updateJob;
+		const { job_id, role_job, company_job, salary, office_location,local, description, requirements, status_job  } = updateJob;
 
 		const oldJob = await this.prismaJobRepository.RecruiterViewUniqueJob(job_id);
 		const recruiterProfile = await this.prismaRecruiterRepository.RecruiterViewProfile(userId);
@@ -43,6 +43,7 @@ export class RecruiterUpdateJobService {
 			company_job, 
 			salary, 
 			office_location, 
+			local,
 			description, 
 			requirements, 
 			status_job 

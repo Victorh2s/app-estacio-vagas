@@ -1,8 +1,17 @@
 import { PrismaRecruiterRepository } from "@/http/repositories/prisma/prisma-recruiter-repository";
-import { IntRecruiterCreateJob } from "../../repositories/interfaces/int-job-repository";
 import { PrismaJobRepository } from "../../repositories/prisma/prisma-job-repository";
+import { Location, StatusJob } from "@prisma/client";
 
-export interface IntRecruiterCreateJobService extends IntRecruiterCreateJob{}
+export interface IntRecruiterCreateJobService{
+	role_job: string, 
+    company_job: string, 
+    salary: number, 
+    office_location: Location[],
+	local: string | null,
+    description: string, 
+    requirements: string, 
+    status_job: StatusJob
+}
 
 export class RecruiterCreateJobService {
 	constructor(

@@ -102,6 +102,7 @@ model JobOffer {
   company_job    String
   salary    Int
   office_location Location[] @default([])
+  local String?
   description  String
   requirements String
   status_job StatusJob

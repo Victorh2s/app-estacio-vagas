@@ -7,6 +7,8 @@ export interface IntRecruiterCreateJob {
     company_job: string, 
     salary: number, 
     office_location: Location[], 
+    local: string | null,
+    recruiter_profile_id: string,
     description: string, 
     requirements: string, 
     status_job: StatusJob
@@ -18,6 +20,7 @@ export interface IntRecruiterUpdateJob {
     company_job?: string, 
     salary?: number, 
     office_location?: Location[], 
+    local?: string | null,
     description?: string, 
     requirements?: string, 
     status_job?: StatusJob
@@ -30,6 +33,7 @@ export interface IntPrismaJobRepository {
         company_job: string;
         salary: number;
         office_location: Location[];
+        local?: string | null,
         description: string;
         requirements: string;
         status_job: StatusJob;
@@ -41,6 +45,7 @@ export interface IntPrismaJobRepository {
         company_job: string;
         salary: number;
         office_location: Location[];
+        local?: string | null,
         description: string;
         requirements: string;
         status_job: StatusJob;
@@ -52,6 +57,7 @@ export interface IntPrismaJobRepository {
         company_job: string;
         salary: number;
         office_location: Location[];
+        local?: string | null,
         description: string;
         requirements: string;
         status_job: StatusJob;
@@ -63,6 +69,7 @@ export interface IntPrismaJobRepository {
         company_job: string;
         salary: number;
         office_location: Location[];
+        local?: string | null,
         description: string;
         requirements: string;
         status_job: StatusJob;
@@ -74,6 +81,7 @@ export interface IntPrismaJobRepository {
         company_job: string;
         salary: number;
         office_location: Location[];
+        local?: string | null,
         description: string;
         requirements: string;
         status_job: StatusJob;
@@ -85,6 +93,7 @@ export interface IntPrismaJobRepository {
         company_job: string;
         salary: number;
         office_location: Location[];
+        local?: string | null,
         description: string;
         requirements: string;
         status_job: StatusJob;
@@ -96,6 +105,7 @@ export interface IntPrismaJobRepository {
         company_job: string;
         salary: number;
         office_location: Location[];
+        local?: string | null,
         description: string;
         requirements: string;
         status_job: StatusJob;
