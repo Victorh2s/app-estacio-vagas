@@ -182,8 +182,6 @@ export class PrismaUserRepository implements IntPrismaUserRepository{
 			}
 		});
 
-		if(!profile) throw new Error("Esse perfil não existe");
-
 		return profile;
 	}
 

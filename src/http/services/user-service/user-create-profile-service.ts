@@ -14,7 +14,7 @@ export class UserCreateProfileService {
 
 		const profile = await this.prismaUserRepository.UserViewProfile(user_id);
 
-		if(profile) throw new Error("Esse usuário já tem um perfil criado!");
+		if(profile) throw new Error("Esse usuário já tem um perfil cadastrado!");
 
 		const createdProfile = await this.prismaUserRepository.UserCreateProfile({
 			profile_picture,

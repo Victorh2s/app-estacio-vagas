@@ -39,8 +39,8 @@ const uploads = upload.fields([{name: "profilePicture", maxCount:1},{name:"cvPdf
 userRoute.get("/view/:user_id", UserViewController);
 userRoute.get("/view-many",VerifyTokenMiddleware, VerifyRoleMiddleware("ADMIN"), UsersViewController);
 userRoute.get("/view-profile/:user_id", UserViewProfileController);
-userRoute.delete("/delete/:id", VerifyTokenMiddleware, UserDeleteController);
-userRoute.post("/create-profile/:id", uploads, VerifyTokenMiddleware, VerifyRoleMiddleware("USER"), UserCreateProfileController);
+userRoute.delete("/delete", VerifyTokenMiddleware, UserDeleteController);
+userRoute.post("/create-profile", uploads, VerifyTokenMiddleware, VerifyRoleMiddleware("USER"), UserCreateProfileController);
 userRoute.put("/update-profile", uploads, VerifyTokenMiddleware, VerifyRoleMiddleware("USER"), UserUpdateProfileController);
 userRoute.post("/application-job/:job_offer_id", VerifyTokenMiddleware, VerifyRoleMiddleware("USER"), UserApplicationJobController);
 userRoute.delete("/remove-application-job/:application_id", VerifyTokenMiddleware, VerifyRoleMiddleware("USER"), UserRemoveApplicationJobController);

@@ -30,6 +30,8 @@ export class UserUpdateProfileService {
         
 		const oldProfile = await this.prismaUserRepository.UserViewProfile(user_id);
 
+		if(!oldProfile) throw new Error("Nenhum perfil foi encontrado associado a esse usuário");
+
 		const updatedFields = getUpdatedFields(oldProfile, {
 			career_opportunity,
 			curse,

@@ -32,6 +32,7 @@ export async function UserCreateProfileController(req: Request, res: Response){
 
 		
 		const { userId } = req.auth_routes;
+		console.log(userId);
 	
 		const {curse, type_curse, career_opportunity, experience, technical_skills, education, professional_objective, salary_expectation : salary, work_preference,} : IntUserCreateProfileService =  req.body;
 		const workPreferenceArray = Array.isArray(work_preference) ? work_preference : JSON.parse(work_preference.trim());

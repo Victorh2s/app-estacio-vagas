@@ -132,7 +132,7 @@ export interface IntPrismaUserRepository {
 
     DeleteUser(id: string): Promise<void>
 
-    UserViewProfile(userId: string): Promise <Profile>
+    UserViewProfile(userId: string): Promise <Profile | null>
 
     UserCreateProfile(data: IntUserCreateProfile): Promise<Profile>
 

@@ -10,6 +10,5 @@ export class UserDeleteService {
   
 	async execute(userId: string) {
 		return await this.prismaUserRepository.DeleteUser(userId);
-
 	}
 }

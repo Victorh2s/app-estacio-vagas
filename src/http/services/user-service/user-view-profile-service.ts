@@ -1,8 +1,5 @@
 import { PrismaUserRepository } from "@/http/repositories/prisma/prisma-user-repository";
 
-
-
-
 export class UserViewProfileService {
 	constructor(
 		private prismaUserRepository: PrismaUserRepository,
@@ -10,7 +7,9 @@ export class UserViewProfileService {
 
   
 	async execute(userId: string) {
-		return await this.prismaUserRepository.UserViewProfile(userId);
+		const profile = await this.prismaUserRepository.UserViewProfile(userId);
 
+		if(!profile) throw new Error("Esse usuário ainda não tem um perfil criado!");
+		return; 
 	}
 }
